@@ -10,7 +10,8 @@
 
 
 NODE_VERSION=$1
-CWD=$(pwd)
+BASE=$(dirname $(dirname $(readlink -f $0)))
+shift
 
 if [[ -z "$NODE_VERSION" ]]; then
     echo "build-static-node <node-version>";
@@ -41,7 +42,9 @@ if [[ $? != 0 ]]; then
 fi
 
 cd "${TMPDIR}/node-v${NODE_VERSION}"
-./configure --fully-static
+./configure --fully-static $@
 make -j$THREADS
 
-cp -H ./node $CWD/node-${NODE_VERSION}
+OUT="${BASE}/dist/v${NODE_VERSION}"
+mkdir -p "${OUT}"
+cp -H ./node "${OUT}/node"
