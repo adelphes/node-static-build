@@ -6,3 +6,7 @@ These binaries are built by compiling and statically linking the NodeJS source t
 
 ### Requirements
 - apt-get build-essential python
+
+
+### Build Notes
+- v14 needs the `gen-regexp-special-case` target linked against shared libraries (the static version segfaults)
